@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 3000;
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const secret = require('./secret.js')
-
+const timeConversion = require('./timeConversion')
 
 const sleepers = []
 
@@ -29,9 +29,14 @@ client.on('message', msg => {
     
     if (authorIsSleeping) {
         const currDate = new Date();
-        msg.reply(`<@!${msg.author.id}> woke up from their long slumber. This user has been sleeping for ${currDate - Object.values(asleepUser)[0]} milliseconds `);
 
-    } else if (msg.content.startsWith('sleep')) {
+        let diff = currDate - Object.values(asleepUser)[0] //difference in milliseconds
+
+
+
+        msg.channel.send(`<@!${msg.author.id}> woke up from their long slumber. This user has been sleeping for ${timeConversion(diff)} seconds `);
+
+    } else if (msg.content.startsWith('!sleep')) {
         const user = msg.mentions.users.first()
         //if user exists...
         if (!!user) {
@@ -41,18 +46,18 @@ client.on('message', msg => {
                     userIsSleeping = true;
             }
             if (userIsSleeping) {
-                msg.reply(`User: <@!${user.id}> has already been marked as sleeping`)
+                msg.channel.send(`User: <@!${user.id}> has already been marked as sleeping`)
             } else {
                 //pushes an object to sleepers Arr in this format
                 // {userid: dateObj}
                 sleepers.push({
                     [user.id.toString()]: new Date(),
                 })
-                msg.reply(`User: <@!${user.id}> is now marked as sleeping`);
+                msg.channel.send(`User: <@!${user.id}> is now marked as sleeping`);
             }
 
         } else {
-            msg.reply('user does not exist')
+            msg.channel('user does not exist')
         }
     }
 });
