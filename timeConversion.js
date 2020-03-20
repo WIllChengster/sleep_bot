@@ -9,11 +9,11 @@ module.exports =  function timeConversion(millisec) {
     var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
 
     if (seconds < 60) {
-        return seconds + " Sec";
+        return seconds + " Seconds";
     } else if (minutes < 60) {
-        return minutes + " Min";
+        return minutes + " Minutes";
     } else if (hours < 24) {
-        return hours + " Hrs";
+        return hours + " Hours";
     } else {
         return days + " Days"
     }

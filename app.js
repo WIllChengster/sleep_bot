@@ -32,7 +32,7 @@ client.on('message', msg => {
         const currDate = new Date();
 
         let diff = currDate - Object.values(asleepUser)[0] //difference in milliseconds
-        msg.channel.send(`<@!${msg.author.id}> woke up from their long slumber. This user has been sleeping for ${timeConversion(diff)} seconds `);
+        msg.channel.send(`<@!${msg.author.id}> woke up from their long slumber. This user has been sleeping for ${timeConversion(diff)}`);
 
     } else if (msg.content.startsWith('!sleep')) {
         const user = msg.mentions.users.first()
