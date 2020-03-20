@@ -3,7 +3,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const secret = require('./secret.js')
+// const secret = require('./secret.js')
+const token = process.env.TOKEN
 const timeConversion = require('./timeConversion')
 
 const sleepers = []
@@ -31,9 +32,6 @@ client.on('message', msg => {
         const currDate = new Date();
 
         let diff = currDate - Object.values(asleepUser)[0] //difference in milliseconds
-
-
-
         msg.channel.send(`<@!${msg.author.id}> woke up from their long slumber. This user has been sleeping for ${timeConversion(diff)} seconds `);
 
     } else if (msg.content.startsWith('!sleep')) {
@@ -57,12 +55,12 @@ client.on('message', msg => {
             }
 
         } else {
-            msg.channel('user does not exist')
+            msg.channel.send('user does not exist')
         }
     }
 });
 
-client.login(secret.bot_token);
+client.login(token);
 
 app.listen(PORT, () => {
     console.log('PORT IS LISTENING TO:', PORT);
